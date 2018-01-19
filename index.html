@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Vue Practice</title>
+    <script type="text/javascript" src="https://unpkg.com/vue@2.3.0"></script>
+  </head>
+  <body>
+    <div id="app1">
+      <h1 ref="myTitle">{{ title }}</h1>
+      <button @click="title = 'changed'">Change title</button>
+      <button @click="destroy">destroy</button>
+    </div>
+
+
+    </div>
+
+    <div id="app2">
+      <h1 ref='title'>{{ title }}</h1>
+      <button @click="onChange">Change Vue1</button>
+    </div>
+  </body>
+
+  <script type="text/javascript">
+
+  var vm1 = new Vue({
+    el: "#app1",
+    data: {
+      title: "App #1"
+    },
+    beforeCreate: function() {
+      console.log('Before!');
+    },
+    created: function() {
+      console.log('Created!');
+    },
+    beforeMount: function() {
+      console.log('beforeMount!');
+    },
+    mounted: function() {
+      console.log('mounted!');
+    },
+    beforeUpdate: function() {
+      console.log(this.$refs.myTitle);
+    },
+    updated: function() {
+      console.log(this.$refs.myTitle);
+    },
+    beforeDestroy: function() {
+      console.log('beforeDestroy!');
+    },
+    destroyed: function() {
+      console.log('destroyed!');
+    },
+    methods: {
+      destroy: function() {
+        this.$destroy();
+      }
+    }
+  })
+
+  vm1.$refs.myTitle.style.color = "red";
+
+  var vm2 = new Vue({
+    el: "#app2",
+    data: {
+      title: "App #2"
+    },
+    methods: {
+      onChange: function() {
+        vm1.title = "Sup bro";
+      },
+      before: function() {
+        console.log('Before update: ' + vm1.$refs.title);
+      },
+      after: function() {
+        console.log('updated: ' + vm1.$refs.title);
+      }
+    }
+  })
+
+  </script>
+</html>
